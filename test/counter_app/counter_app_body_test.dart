@@ -57,5 +57,30 @@ void main() {
 
       await screenMatchesGolden(tester, 'counter_app_body_no_history');
     });
+
+    testGoldens('CounterAppBody with history - golden', (tester) async {
+      final builder = GoldenBuilder.column()
+        ..addScenario(
+          'No history',
+          const SizedBox(
+            width: 400,
+            height: 400,
+            child: MockWrapper(child: CounterAppBody()),
+          ),
+        );
+
+      await tester.pumpWidgetBuilder(
+        builder.build(),
+        surfaceSize: const Size(400, 600),
+      );
+
+      await screenMatchesGolden(tester, 'counter_app_body_with_history',
+          customPump: (tester) async {
+        final increaseKey = find.byKey(const Key('ElevatedButton-Increase'));
+        await tester.tap(increaseKey);
+        await tester.tap(increaseKey);
+        await tester.pumpAndSettle();
+      });
+    });
   });
 }
