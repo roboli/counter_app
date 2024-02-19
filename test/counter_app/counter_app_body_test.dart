@@ -3,6 +3,7 @@ import 'package:counter_app/counter_app/widgets/app_title.dart';
 import 'package:counter_app/counter_app/widgets/history_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:golden_toolkit/golden_toolkit.dart';
 
 import '../mock_wrapper.dart';
 
@@ -36,6 +37,25 @@ void main() {
       // Only the counter has negative values, the history
       // doesn't
       expect(find.text('-1'), findsOneWidget);
+    });
+
+    testGoldens('CounterAppBody no history - golder', (tester) async {
+      final builder = GoldenBuilder.column()
+        ..addScenario(
+          'No history',
+          const SizedBox(
+            width: 400,
+            height: 400,
+            child: MockWrapper(child: CounterAppBody()),
+          ),
+        );
+
+      await tester.pumpWidgetBuilder(
+        builder.build(),
+        surfaceSize: const Size(400, 600),
+      );
+
+      await screenMatchesGolden(tester, 'counter_app_body_no_history');
     });
   });
 }
