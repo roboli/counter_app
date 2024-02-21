@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: counter_app
+        working-directory: ../../
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -36,5 +36,5 @@ jobs:
       - name: Making sure that code coverage is at least 95
         uses: VeryGoodOpenSource/very_good_coverage@v1.1.1
         with:
-          path: counter_app/coverage/lcov.info
+          path: coverage/lcov.info
           min_coverage: 95
