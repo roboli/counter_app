@@ -14,11 +14,11 @@ class CounterAppBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return CounterState(
       model: Counter(),
-      child: Scaffold(
+      child: const Scaffold(
         body: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: const [
+            children: [
               // The top title
               AppTitle(),
 

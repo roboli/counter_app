@@ -7,9 +7,9 @@ class AppTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return const Row(
       mainAxisSize: MainAxisSize.min,
-      children: const [
+      children: [
         // The icon
         Icon(
           Icons.remove,
