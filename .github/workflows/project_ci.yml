@@ -13,9 +13,6 @@ jobs:
   verify_project_health:
     name: Counter App - CI
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ../../
     steps:
       - name: Checkout
         uses: actions/checkout@v2
