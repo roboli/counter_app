@@ -1,0 +1,40 @@
+name: counter_app_ci
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  verify_project_health:
+    name: Counter App - CI
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: counter_app
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1.5.3
+
+      - name: Installing dependencies
+        run: flutter pub get
+
+      - name: Making sure the code is formatted
+        run: flutter format --set-exit-if-changed .
+
+      - name: Making sure the analyzer doesn't report problems
+        run: flutter analyze --fatal-infos --fatal-warnings && flutter pub run dart_code_metrics:metrics analyze lib test
+
+      - name: Runing unit and widget tests
+        run: flutter test --coverage
+
+      - name: Making sure that code coverage is at least 95
+        uses: VeryGoodOpenSource/very_good_coverage@v1.1.1
+        with:
+          path: counter_app/coverage/lcov.info
+          min_coverage: 95
